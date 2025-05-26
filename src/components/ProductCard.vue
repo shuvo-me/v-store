@@ -1,19 +1,22 @@
 <script setup lang="ts">
 import type { Product } from '@/utils/types';
 import { ShoppingCart } from 'lucide-vue-next';
+import { RouterLink } from 'vue-router';
 
 const { product } = defineProps<{ product: Product }>();
 
 </script>
 <template>
 
-    <div class="card card-sm bg-base-100  shadow-sm relative">
-
+    <div class="card card-sm bg-base-100 relative group">
         <figure>
             <img loading="lazy" :src="product.thumbnail" :alt="product.title" />
         </figure>
         <div class="card-body">
-            <h2 class="card-title line-clamp-1">{{ product.title }}</h2>
+            <router-link :to="`/product/${product.id}`">
+                <h2 class="card-title line-clamp-1 group-hover:link">{{ product.title }}</h2>
+            </router-link>
+
             <div class="card-actions justify-between items-center">
 
                 <div class="flex items-center gap-2">
