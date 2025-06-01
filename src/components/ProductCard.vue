@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import useCartStore from '@/store/cart';
 import type { Product } from '@/utils/types';
 import { ShoppingCart } from 'lucide-vue-next';
 import { ref } from 'vue';
@@ -6,6 +7,7 @@ import { RouterLink } from 'vue-router';
 
 const { product } = defineProps<{ product: Product }>();
 const showImage = ref(false);
+const cartStore = useCartStore();
 
 function handleLoadImage() {
     showImage.value = true;
@@ -32,7 +34,7 @@ function handleLoadImage() {
                         }}% Off
                     </div>
                 </div>
-                <button class="btn  btn-soft btn-primary btn-square">
+                <button class="btn  btn-soft btn-primary btn-square" @click="cartStore.addToCart(product)">
                     <ShoppingCart :size="20" />
                 </button>
             </div>

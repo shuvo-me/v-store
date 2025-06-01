@@ -3,6 +3,7 @@ import type { Product } from '@/utils/types';
 import { computed, ref, watch } from 'vue';
 import ProductCard from '@/components/ProductCard.vue';
 import { SearchIcon, ShoppingBasket, X } from 'lucide-vue-next'
+import useCartStore from '@/store/cart';
 
 //state
 const products = ref<Product[]>([]);
@@ -12,6 +13,7 @@ const selectedCategory = ref<string>('');
 const limit = 10;
 const skip = ref<number>(0);
 const totalItem = ref<number>(194);
+const cartStore = useCartStore();
 
 //computed
 const totalPages = computed(() => {
@@ -65,8 +67,12 @@ watch([searchTerm, skip], ([newTerm, newSkip]) => {
                         <X :size="16" />
                     </span>
                 </label>
-                <button class="btn  btn-soft btn-warning btn-square">
+                <button class="btn  btn-soft btn-warning btn-square  relative">
                     <ShoppingBasket :size="20" />
+                    <span v-if="cartStore.cartItems.length"
+                        class="badge badge-ghost badge-warning absolute -top-2.5 -right-2.5">{{
+                            cartStore.cartItems.length
+                        }}</span>
                 </button>
             </div>
         </div>
