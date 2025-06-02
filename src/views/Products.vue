@@ -4,6 +4,7 @@ import { computed, ref, watch } from 'vue';
 import ProductCard from '@/components/ProductCard.vue';
 import { SearchIcon, ShoppingBasket, X } from 'lucide-vue-next'
 import useCartStore from '@/store/cart';
+import { RouterLink } from 'vue-router';
 
 //state
 const products = ref<Product[]>([]);
@@ -67,13 +68,13 @@ watch([searchTerm, skip], ([newTerm, newSkip]) => {
                         <X :size="16" />
                     </span>
                 </label>
-                <button class="btn  btn-soft btn-warning btn-square  relative">
+                <router-link to="/cart" class="btn  btn-soft btn-warning btn-square  relative">
                     <ShoppingBasket :size="20" />
                     <span v-if="cartStore.cartItems.length"
                         class="badge badge-ghost badge-warning absolute -top-2.5 -right-2.5">{{
                             cartStore.cartItems.length
                         }}</span>
-                </button>
+                </router-link>
             </div>
         </div>
         <div class="flex flex-col">
