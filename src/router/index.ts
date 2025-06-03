@@ -8,6 +8,24 @@ const routes = [
     component: () => import("../views/Products.vue"),
     meta: {
       title: "Products",
+      requireAuth: false,
+    },
+  },
+  {
+    path: "/cart",
+    name: "cart",
+    component: () => import("../views/Cart.vue"),
+    meta: {
+      title: "Cart",
+      requireAuth: false,
+    },
+  },
+  {
+    path: "/checkout",
+    name: "checkout",
+    component: () => import("../views/Checkout.vue"),
+    meta: {
+      title: "Checkout",
       requireAuth: true,
     },
   },
