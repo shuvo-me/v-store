@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import useCartStore from '@/store/cart';
-import { reactive, useTemplateRef } from 'vue';
+import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 const cartStore = useCartStore();
-const shippingForm = useTemplateRef('shippingForm');
+const loading = ref<boolean>(false);
+const showToast = ref<boolean>(false);
+const router = useRouter();
 const shippingInfo = reactive({
     fullName: '',
     email: '',
@@ -19,15 +22,41 @@ const shippingInfo = reactive({
     cvc: ''
 });
 
+async function placeOrder(e: Event) {
+
+    loading.value = true;
+    new Promise((resolve) => setTimeout(() => {
+        loading.value = false;
+        resolve(true);
+    }, 3000)).then(() => {
+
+        showToast.value = true;
+        setTimeout(() => {
+            showToast.value = false;
+            cartStore.clearCart();
+            router.push('/');
+        }, 2000);
+    });
+
+}
+
 </script>
 <template>
     <div class="container mx-auto px-4 py-8">
-        <h1 class="font-bold text-2xl">Checkout</h1>
+        <div class="flex items-center justify-between">
+            <h1 class="font-bold text-2xl">Checkout</h1>
+            <div class="toast toast-top toast-end" v-show="showToast">
+                <div class="alert alert-success">
+                    <span>Order placed successfully 🎉</span>
+                </div>
+            </div>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 mt-10 gap-6 divide-y md:divide-y-0 md:divide-x divide-gray-600">
             <div class="flex flex-col gap-4 pr-6 pb-6 md:pb-0">
                 <h4 class=" font-semibold">Shipping Information</h4>
                 <div>
-                    <form action="" ref="shippingForm"
+                    <form id="shippingForm" @submit.prevent="placeOrder"
                         class="flex flex-col gap-6 [&_input:not([type='checkbox']):not([type='radio'])]:w-full">
                         <fieldset class="fieldset">
                             <legend class="fieldset-legend">Full Name <span class=" text-error">*</span></legend>
@@ -84,12 +113,12 @@ const shippingInfo = reactive({
                                     <fieldset class="fieldset">
                                         <legend class="fieldset-legend">Name On Card <span class=" text-error">*</span>
                                         </legend>
-                                        <input type="text" v-model="shippingInfo.cardName" class="input" />
+                                        <input type="text" v-model="shippingInfo.cardName" class="input" required />
                                     </fieldset>
                                     <fieldset class="fieldset">
                                         <legend class="fieldset-legend">Card Number <span class=" text-error">*</span>
                                         </legend>
-                                        <input type="text" v-model="shippingInfo.cardNumber" class="input" />
+                                        <input type="text" v-model="shippingInfo.cardNumber" class="input" required />
                                     </fieldset>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <fieldset class="fieldset">
@@ -97,13 +126,13 @@ const shippingInfo = reactive({
                                                     class=" text-error">*</span>
                                             </legend>
                                             <input type="date" v-model="shippingInfo.cardExpiry" class="input"
-                                                placeholder="MM/YY" />
+                                                placeholder="MM/YY" required />
                                         </fieldset>
                                         <fieldset class="fieldset">
                                             <legend class="fieldset-legend">CVC <span class=" text-error">*</span>
                                             </legend>
                                             <input type="text" v-model="shippingInfo.cvc" class="input"
-                                                placeholder="123" />
+                                                placeholder="123" required />
                                         </fieldset>
                                     </div>
                                 </div>
@@ -151,7 +180,10 @@ const shippingInfo = reactive({
                         <dt> $ {{ cartStore.totalPrice() + 5 }}</dt>
                     </dl>
                 </div>
-                <button class="btn btn-primary w-full mt-10">Place Order</button>
+                <button class="btn btn-primary w-full mt-10" :disabled="loading" form="shippingForm" type="submit">Place
+                    Order
+                    <span class="loading loading-spinner loading-xs" v-if="loading"></span>
+                </button>
             </div>
         </div>
     </div>
