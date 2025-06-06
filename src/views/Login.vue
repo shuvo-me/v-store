@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import { useAuthStore } from '@/store';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter, type RouteLocationRaw } from 'vue-router';
 
 const loginInfo = reactive({
     email: 'admin@example.com',
     password: '12345678'
 });
 const loading = ref(false);
-const router = useRouter()
+const router = useRouter();
+const route = useRoute();
 
 const authStore = useAuthStore();
 
@@ -18,7 +19,8 @@ async function handleLogin() {
 
     try {
         const response = await authStore.login(loginInfo);
-        if (response.email) router.push({ name: 'products' });
+        if (response.email) router.push(route.query.redirect as RouteLocationRaw || '/');
+
     } catch (error) {
         console.error('Login failed:', error);
     } finally {

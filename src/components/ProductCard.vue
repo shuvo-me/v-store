@@ -31,10 +31,11 @@ function handleLoadImage() {
                 <div class="flex items-center gap-2">
                     <span class="text-lg font-semibold">${{ product.price.toFixed(2) }}</span>
                     <div class="badge badge-soft badge-warning ">{{ Math.round(product.discountPercentage)
-                        }}% Off
+                    }}% Off
                     </div>
                 </div>
-                <button class="btn  btn-soft btn-primary btn-square" @click="cartStore.addToCart(product)">
+                <button class="btn  btn-soft btn-primary btn-square"
+                    @click="cartStore.addToCart({ ...product, quantity: 1 })">
                     <ShoppingCart :size="20" />
                 </button>
             </div>

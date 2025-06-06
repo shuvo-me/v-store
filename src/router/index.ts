@@ -8,7 +8,7 @@ const routes = [
     component: () => import("../views/Products.vue"),
     meta: {
       title: "Products",
-      requireAuth: false,
+      requireAuth: true,
     },
   },
   {
@@ -17,7 +17,7 @@ const routes = [
     component: () => import("../views/Cart.vue"),
     meta: {
       title: "Cart",
-      requireAuth: false,
+      requireAuth: true,
     },
   },
   {
@@ -44,7 +44,7 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   // Set the document title
   if (to.meta.title) {
     // document.title = to.meta.title

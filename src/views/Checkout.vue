@@ -22,7 +22,7 @@ const shippingInfo = reactive({
     cvc: ''
 });
 
-async function placeOrder(e: Event) {
+async function placeOrder() {
 
     loading.value = true;
     new Promise((resolve) => setTimeout(() => {
