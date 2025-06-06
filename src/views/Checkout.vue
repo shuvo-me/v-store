@@ -52,8 +52,8 @@ async function placeOrder(e: Event) {
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 mt-10 gap-6 divide-y md:divide-y-0 md:divide-x divide-gray-600">
-            <div class="flex flex-col gap-4 pr-6 pb-6 md:pb-0">
+        <div class="flex flex-col md:flex-row gap-6 mt-8">
+            <div class="flex flex-col gap-4 pr-6 pb-6 md:pb-0 flex-1/2">
                 <h4 class=" font-semibold">Shipping Information</h4>
                 <div>
                     <form id="shippingForm" @submit.prevent="placeOrder"
@@ -148,7 +148,8 @@ async function placeOrder(e: Event) {
                     </form>
                 </div>
             </div>
-            <div class="pl-6">
+            <div class="divider md:divider-horizontal" />
+            <div class="pl-6 flex-grow flex-1/2">
                 <h4 class=" font-semibold">Your cart</h4>
                 <div class=" max-h-[400px] overflow-y-auto">
                     <div class=" flex items-center" v-for="(item, index) in cartStore.cartItems" :key="index">
@@ -177,7 +178,7 @@ async function placeOrder(e: Event) {
                     <div class="divider"></div>
                     <dl class=" flex items-center justify-between">
                         <dd>Total:</dd>
-                        <dt> $ {{ cartStore.totalPrice() + 5 }}</dt>
+                        <dt> $ {{ (cartStore.totalPrice() + 5).toFixed(2) }}</dt>
                     </dl>
                 </div>
                 <button class="btn btn-primary w-full mt-10" :disabled="loading" form="shippingForm" type="submit">Place
