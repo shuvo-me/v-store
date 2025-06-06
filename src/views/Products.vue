@@ -19,6 +19,7 @@ const totalItem = ref<number>(194);
 const cartStore = useCartStore();
 const isLoggingOut = ref<boolean>(false);
 const authStore = useAuthStore();
+const theme = ref<boolean>(true);
 
 //computed
 const totalPages = computed(() => {
@@ -26,6 +27,17 @@ const totalPages = computed(() => {
 })
 
 //watchers
+watch(theme, (newTheme) => {
+    if (newTheme) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'cupcake');
+        localStorage.setItem('theme', 'cupcake');
+    }
+
+}, { immediate: true });
+
 watch([searchTerm, skip], ([newTerm, newSkip]) => {
     loading.value = true;
     products.value = [];
@@ -91,8 +103,9 @@ async function logout() {
                             cartStore.cartItems.length
                         }}</span>
                 </router-link>
+
                 <label class="toggle text-base-content ">
-                    <input type="checkbox" value="dark" class="theme-controller" />
+                    <input type="checkbox" v-model="theme" class="theme-controller" />
 
                     <svg aria-label="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none"
