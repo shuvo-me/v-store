@@ -169,7 +169,7 @@ async function placeOrder(e: Event) {
                 <div class="pr-6 space-y-2">
                     <dl class=" flex items-center justify-between">
                         <dd>Subtotal:</dd>
-                        <dt> $ {{ cartStore.totalPrice() }}</dt>
+                        <dt> $ {{ cartStore.totalPrice().toFixed(2) }}</dt>
                     </dl>
                     <dl class=" flex items-center justify-between">
                         <dd>Shipping:</dd>
