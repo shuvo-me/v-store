@@ -27,16 +27,16 @@ const totalPages = computed(() => {
 })
 
 //watchers
-watch(theme, (newTheme) => {
-    if (newTheme) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-    } else {
-        document.documentElement.setAttribute('data-theme', 'cupcake');
-        localStorage.setItem('theme', 'cupcake');
-    }
+// watch(theme, (newTheme) => {
+//     if (newTheme) {
+//         document.documentElement.setAttribute('data-theme', 'dark');
+//         localStorage.setItem('theme', 'dark');
+//     } else {
+//         document.documentElement.setAttribute('data-theme', 'cupcake');
+//         localStorage.setItem('theme', 'cupcake');
+//     }
 
-}, { immediate: true });
+// }, { immediate: true });
 
 watch([searchTerm, skip], ([newTerm, newSkip]) => {
     loading.value = true;
@@ -104,7 +104,7 @@ async function logout() {
                         }}</span>
                 </router-link>
 
-                <label class="toggle text-base-content ">
+                <!-- <label class="toggle text-base-content ">
                     <input type="checkbox" v-model="theme" class="theme-controller" />
 
                     <svg aria-label="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -129,11 +129,11 @@ async function logout() {
                         </g>
                     </svg>
 
-                </label>
-                <button class="btn btn-info" :disabled="isLoggingOut" @click="logout">
+                </label> -->
+                <!-- <button class="btn btn-info" :disabled="isLoggingOut" @click="logout">
                     Logout
                     <span class=" loading-spinner loading loading-xs " v-if="isLoggingOut"></span>
-                </button>
+                </button> -->
             </div>
         </div>
         <div class="flex flex-col">

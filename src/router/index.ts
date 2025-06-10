@@ -12,6 +12,15 @@ const routes = [
     },
   },
   {
+    path: "/product/:productId",
+    name: "productDetail",
+    component: () => import("../views/ProductDetails.vue"),
+    meta: {
+      title: "Product Detail",
+      requireAuth: true,
+    },
+  },
+  {
     path: "/cart",
     name: "cart",
     component: () => import("../views/Cart.vue"),

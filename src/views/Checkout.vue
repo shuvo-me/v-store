@@ -44,7 +44,12 @@ async function placeOrder() {
 <template>
     <div class="container mx-auto px-4 py-8">
         <div class="flex items-center justify-between">
-            <h1 class="font-bold text-2xl">Checkout</h1>
+            <div class="breadcrumbs text-sm">
+                <ul>
+                    <li><router-link to="/">Products</router-link></li>
+                    <li><router-link to="/checkout">Checkout</router-link></li>
+                </ul>
+            </div>
             <div class="toast toast-top toast-end" v-show="showToast">
                 <div class="alert alert-success">
                     <span>Order placed successfully 🎉</span>
