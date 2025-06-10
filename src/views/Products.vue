@@ -5,8 +5,8 @@ import ProductCard from '@/components/ProductCard.vue';
 import { SearchIcon, ShoppingBasket, X } from 'lucide-vue-next'
 import useCartStore from '@/store/cart';
 import { RouterLink } from 'vue-router';
-import { useAuthStore } from '@/store';
-import router from '@/router';
+// import { useAuthStore } from '@/store';
+// import router from '@/router';
 
 //state
 const products = ref<Product[]>([]);
@@ -17,9 +17,9 @@ const limit = 10;
 const skip = ref<number>(0);
 const totalItem = ref<number>(194);
 const cartStore = useCartStore();
-const isLoggingOut = ref<boolean>(false);
-const authStore = useAuthStore();
-const theme = ref<boolean>(true);
+// const isLoggingOut = ref<boolean>(false);
+// const authStore = useAuthStore();
+// const theme = ref<boolean>(true);
 
 //computed
 const totalPages = computed(() => {
@@ -64,17 +64,17 @@ watch([searchTerm, skip], ([newTerm, newSkip]) => {
     }, 300);
 }, { immediate: true });
 
-async function logout() {
-    isLoggingOut.value = true;
-    try {
-        await authStore.logout();
-        router.push('/login');
-    } catch (error) {
-        console.error('Logout failed:', error);
-    } finally {
-        isLoggingOut.value = false;
-    }
-}
+// async function logout() {
+//     isLoggingOut.value = true;
+//     try {
+//         await authStore.logout();
+//         router.push('/login');
+//     } catch (error) {
+//         console.error('Logout failed:', error);
+//     } finally {
+//         isLoggingOut.value = false;
+//     }
+// }
 
 </script>
 
