@@ -43,10 +43,10 @@ yarn
 - Make sure you are using **Tailwind CSS v4**.
 - In your main CSS file (e.g. `src/assets/main.css`):
 
-    ```css
-    @import "tailwindcss";
-    @plugin "daisyui";
-    ```
+  ```css
+  @import "tailwindcss";
+  @plugin "daisyui";
+  ```
 
 - No `tailwind.config.js` is needed for Tailwind CSS v4.
 
@@ -83,15 +83,19 @@ src/
 ## 🛒 Cart Persistence
 
 - Cart items are stored in `sessionStorage` via a Pinia store watcher:
-    ```ts
-    watch(cartItems, (newCartItems) => {
+  ```ts
+  watch(
+    cartItems,
+    (newCartItems) => {
       if (newCartItems.length > 0) {
         sessionStorage.setItem("cart", JSON.stringify(newCartItems));
       } else {
         sessionStorage.removeItem("cart");
       }
-    }, { deep: true, immediate: true });
-    ```
+    },
+    { deep: true, immediate: true },
+  );
+  ```
 
 ---
 
@@ -111,6 +115,5 @@ src/
 - [DummyJSON API](https://dummyjson.com/)
 
 ---
-
 
 > Built with ❤️ using Vue 3, Tailwind CSS 4, and daisyUI 5.
