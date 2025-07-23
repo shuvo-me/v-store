@@ -15,34 +15,25 @@ function handleLoadImage() {
 </script>
 <template>
   <div class="group card relative bg-base-100 card-sm">
-    <figure v-show="showImage">
-      <img
-        :src="product.thumbnail"
-        :alt="product.title"
-        @load="handleLoadImage"
-      />
+    <figure v-show="showImage" data-testid="product-image">
+      <img :src="product.thumbnail" :alt="product.title" @load="handleLoadImage" />
     </figure>
-    <div class="h-52 w-full skeleton" v-show="!showImage" />
+    <div class="h-52 w-full skeleton" v-show="!showImage" data-testid="image-skeleton" />
     <div class="card-body">
-      <router-link :to="`/product/${product.id}`">
-        <h2 class="card-title line-clamp-1 group-hover:link">
+      <router-link :to="`/product/${product.id}`" data-testid="product-link">
+        <h2 class="card-title line-clamp-1 group-hover:link" data-testid="product-name">
           {{ product.title }}
         </h2>
       </router-link>
 
       <div class="card-actions items-center justify-between">
         <div class="flex items-center gap-2">
-          <span class="text-lg font-semibold"
-            >${{ product.price.toFixed(2) }}</span
-          >
-          <div class="badge-soft badge badge-warning">
+          <span class="text-lg font-semibold" data-testid="product-price">${{ product.price.toFixed(2) }}</span>
+          <div class="badge-soft badge badge-warning" data-testid="product-discount">
             {{ Math.round(product.discountPercentage) }}% Off
           </div>
         </div>
-        <button
-          class="btn btn-square btn-soft btn-primary"
-          @click="cartStore.addToCart({ ...product, quantity: 1 })"
-        >
+        <button class="btn btn-square btn-soft btn-primary" @click="cartStore.addToCart({ ...product, quantity: 1 })">
           <ShoppingCart :size="20" />
         </button>
       </div>

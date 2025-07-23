@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "@/store";
 
-const routes = [
+export const routes = [
   {
     path: "/",
     name: "products",
