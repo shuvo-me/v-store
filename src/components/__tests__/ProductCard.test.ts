@@ -1,11 +1,15 @@
 import ProductCard from "../ProductCard.vue";
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import { mount, type VueWrapper } from "@vue/test-utils";
+import { mount, type VueWrapper, RouterLinkStub } from "@vue/test-utils";
 import type { Product } from "@/utils/types";
 import { createTestingPinia } from "@pinia/testing";
-import useCartStore from "@/store/cart";
-import { createPinia, setActivePinia } from "pinia";
-import { createRouter, createWebHistory, type Router } from "vue-router";
+
+import {
+  createMemoryHistory,
+  createRouter,
+  createWebHistory,
+  type Router,
+} from "vue-router";
 import { routes } from "@/router";
 
 const product: Product = {
@@ -73,11 +77,10 @@ describe("Testing ProductCard Component", () => {
   let router: Router;
   beforeEach(async () => {
     router = createRouter({
-      history: createWebHistory(),
+      history: createMemoryHistory(),
       routes: routes,
     });
 
-    // await router.isReady();
     // setActivePinia(createPinia());
     wrapper = mount(ProductCard, {
       props: {
@@ -110,4 +113,26 @@ describe("Testing ProductCard Component", () => {
       `${Math.round(product.discountPercentage)}% Off`,
     );
   });
+
+  test("Product name is displayed correctly", () => {
+    const productNameElement = wrapper.find("[data-testid='product-name']");
+    expect(productNameElement.exists()).toBeTruthy();
+    expect(productNameElement.text()).toBe(product.title);
+  });
+
+  test("Should go to product details page on clicking product name", async () => {
+    const productDetailsLink = wrapper.find("[data-testid='product-link']");
+    expect(productDetailsLink.attributes("href")).toBe(
+      `/product/${product.id}`,
+    );
+    await productDetailsLink.trigger("click");
+    await router.isReady();
+    expect(router.currentRoute.value.path).toBe(`/product/${product.id}`);
+  });
+
+  // test("Should display product image", () => {
+  //   const productImage = wrapper.find("[data-testid='product-image']");
+  //   expect(productImage.exists()).toBeTruthy();
+  //   expect(productImage.attributes('src')).toBe(product.images[0]);
+  // });
 });
