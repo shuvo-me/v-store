@@ -130,9 +130,21 @@ describe("Testing ProductCard Component", () => {
     expect(router.currentRoute.value.path).toBe(`/product/${product.id}`);
   });
 
-  // test("Should display product image", () => {
-  //   const productImage = wrapper.find("[data-testid='product-image']");
-  //   expect(productImage.exists()).toBeTruthy();
-  //   expect(productImage.attributes('src')).toBe(product.images[0]);
-  // });
+  test("Should display product image after load", async () => {
+    const img = wrapper.find("[data-testid='product-image'] img");
+    expect(img.exists()).toBe(true);
+    expect(img.attributes("src")).toBe(product.thumbnail);
+    expect(img.attributes("alt")).toBe(product.title);
+
+    // Simulate image load
+    await img.trigger("load");
+
+    // After load, the image should be visible
+    const figure = wrapper.find("[data-testid='product-image']");
+    expect(figure.isVisible()).toBe(true);
+
+    // Skeleton should be hidden
+    const skeleton = wrapper.find("[data-testid='image-skeleton']");
+    expect(skeleton.attributes("style")).toContain("display: none");
+  });
 });
