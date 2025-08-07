@@ -1,16 +1,12 @@
 import ProductCard from "../ProductCard.vue";
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import { mount, type VueWrapper, RouterLinkStub } from "@vue/test-utils";
+import { mount, type VueWrapper } from "@vue/test-utils";
 import type { Product } from "@/utils/types";
 import { createTestingPinia } from "@pinia/testing";
 
-import {
-  createMemoryHistory,
-  createRouter,
-  createWebHistory,
-  type Router,
-} from "vue-router";
+import { createMemoryHistory, createRouter, type Router } from "vue-router";
 import { routes } from "@/router";
+import useCartStore from "@/store/cart";
 
 const product: Product = {
   id: 1,
@@ -75,10 +71,16 @@ const product: Product = {
 describe("Testing ProductCard Component", () => {
   let wrapper: VueWrapper<any>;
   let router: Router;
+  let pinia: ReturnType<typeof createTestingPinia>;
   beforeEach(async () => {
     router = createRouter({
       history: createMemoryHistory(),
       routes: routes,
+    });
+
+    pinia = createTestingPinia({
+      createSpy: vi.fn,
+      stubActions: false,
     });
 
     // setActivePinia(createPinia());
@@ -87,12 +89,7 @@ describe("Testing ProductCard Component", () => {
         product,
       },
       global: {
-        plugins: [
-          router,
-          createTestingPinia({
-            createSpy: vi.fn,
-          }),
-        ],
+        plugins: [router, pinia],
       },
     });
   });
@@ -146,5 +143,17 @@ describe("Testing ProductCard Component", () => {
     // Skeleton should be hidden
     const skeleton = wrapper.find("[data-testid='image-skeleton']");
     expect(skeleton.attributes("style")).toContain("display: none");
+  });
+
+  test("Should add product to cartStore", async () => {
+    const cartStore = useCartStore(pinia);
+    console.log({ check: cartStore.cartItems });
+    const addToCartButton = wrapper.find(".addToCartBtn");
+    expect(addToCartButton.exists()).toBeTruthy();
+    await addToCartButton.trigger("click");
+    await addToCartButton.trigger("click");
+    expect(cartStore.cartItems.length).toBe(1);
+    expect(cartStore.cartItems[0].id).toBe(product.id);
+    expect(cartStore.cartItems[0].quantity).toBe(2);
   });
 });

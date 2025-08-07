@@ -33,7 +33,8 @@ function handleLoadImage() {
             {{ Math.round(product.discountPercentage) }}% Off
           </div>
         </div>
-        <button class="btn btn-square btn-soft btn-primary" @click="cartStore.addToCart({ ...product, quantity: 1 })">
+        <button class="btn btn-square btn-soft btn-primary addToCartBtn"
+          @click="cartStore.addToCart({ ...product, quantity: 1 })">
           <ShoppingCart :size="20" />
         </button>
       </div>
