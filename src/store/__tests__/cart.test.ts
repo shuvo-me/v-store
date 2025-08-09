@@ -102,4 +102,8 @@ describe("Testing Cart Store", () => {
     );
     expect(cartStore.totalPrice()).toBe(total);
   });
+  test("Should remove a product from cart", () => {
+    cartStore.removeFromCart(product.id);
+    expect(cartStore.cartItems.length).toBe(0);
+  });
 });
