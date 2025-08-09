@@ -2,7 +2,7 @@ import type { Product } from "@/utils/types";
 import { defineStore } from "pinia";
 import { ref, watch } from "vue";
 
-type CartItemType = Product & { quantity: number };
+export type CartItemType = Product & { quantity: number };
 
 const useCartStore = defineStore("cart", () => {
   const sessionCartItems = JSON.parse(
