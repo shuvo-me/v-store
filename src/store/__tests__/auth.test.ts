@@ -17,4 +17,25 @@ describe("Testing Auth store", () => {
     expect(authStore.isAuthenticated).toBe(false);
     expect(authStore.user).toBe(null);
   });
+
+  test("Should login user successfully", async () => {
+    const user = {
+      email: "check@dev.com",
+      password: "12345678",
+    };
+
+    const res = await authStore.login(user);
+
+    expect(res.email).toBe(user.email);
+    expect(authStore.isAuthenticated).toBe(true);
+    expect((authStore.user as { username: string })?.username).toBe("admin");
+  });
+
+  test("Should logout user successfully", async () => {
+    const res = await authStore.logout();
+
+    expect(res).toBe(true);
+    expect(authStore.isAuthenticated).toBe(false);
+    expect(authStore.user).toBeNull();
+  });
 });
