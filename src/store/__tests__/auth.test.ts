@@ -12,4 +12,9 @@ describe("Testing Auth store", () => {
   test("Auth store be defined", () => {
     expect(authStore).toBeDefined();
   });
+
+  test("There should be now user", () => {
+    expect(authStore.isAuthenticated).toBe(false);
+    expect(authStore.user).toBe(null);
+  });
 });
